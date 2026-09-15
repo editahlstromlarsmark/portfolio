@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit A. Larsmark</title>
+    <link rel="stylesheet" href="styles.css" />
+  
+    <style>
+      /* Göm radioknapparna */
+      input[type="radio"] {
+        display: none;
+      }
+      
+      body {
+        margin: 0; 
+        overflow: hidden; /* Förhindrar scroll på hela sidan, vi scrollar bara inuti högersidan */
+        background-color: #fff;
+        color: #000;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      /* Huvudcontainer */
+      .portfolio-container {
+        display: flex;
+        height: 100vh;
+      }
+      
+      /* === VÄNSTER SIDA (Menyn) === */
+      .sidebar {
+        width: 20vw;
+        background-color: #fff;
+        padding: 0px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0; 
+        overflow-y: auto; /* Tillåter sidebaren att scrolla ifall beskrivningarna blir väldigt långa */
+      }
+      
+      .sidebar h2 {
+        margin-top: 10px;
+        margin-bottom: 2px;
+        margin-left: 4px;
+        font-size: 1.2rem;
+      }
+      
+      .sidebar label {
+        padding: 5px 2px;
+        margin-left: 4px;
+        cursor: pointer;
+        display: block; /* Får länkarna att ligga snyggt under varandra */
+      }
+
+      /* == NYTT: Projektbeskrivningar i menyn == */
+      .work-descriptions {
+        margin-top: 20px;
+        margin-left: 6px;
+        padding-right: 15px;
+      }
+
+      .desc {
+        display: none; /* Gömmer alla texter från början */
+        font-weight: normal; /* Gör texten normaltjock för bättre läsbarhet */
+        line-height: 1.4;
+      }
+
+      /* === KONTAKTINFO I BOTTEN === */
+      .sidebar .info {
+        margin-top: auto; /* Knuffar ner info-lådan längst ner i menyn */
+        margin-left: 4px;
+        padding-top: 20px;
+        padding-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .sidebar p {
+        margin-top: 12px;
+      }
+
+      .info a {
+        text-decoration: none;
+        color: #000;
+        margin-bottom: 4px;
+        transition: color 0.2s;
+      }
+
+      .info a:hover {
+        color: #ecdd05;
+      }
+      
+      /* === HÖGER SIDA (Innehåll) === */
+      .content-area {
+        flex-grow: 1;
+        padding: 0px;
+        box-sizing: border-box;
+        background-color: #fff;
+        overflow-y: auto; /* TILLÅTER vertikal scroll! */
+      }
+      
+      .work-panel {
+        display: none; /* Gömmer alla verk från början (vit skärm) */
+        min-height: 100vh;
+      }
+      
+      /* == KOPPLING: Visa rätt panel och rätt text när en knapp klickas == */
+      
+      /* Paneler */
+      #work1:checked ~ .portfolio-container .panel-1,
+      #work2:checked ~ .portfolio-container .panel-2,
+      #work3:checked ~ .portfolio-container .panel-3,
+      #work4:checked ~ .portfolio-container .panel-4,
+      #work5:checked ~ .portfolio-container .panel-5,
+      #work6:checked ~ .portfolio-container .panel-6,
+      #work7:checked ~ .portfolio-container .panel-7,
+      #work8:checked ~ .portfolio-container .panel-8,
+      #work9:checked ~ .portfolio-container .panel-9,
+      #work10:checked ~ .portfolio-container .panel-10 {
+        display: block;
+      }
+
+      /* Texter i sidebaren */
+      #work1:checked ~ .portfolio-container .sidebar .desc-1,
+      #work2:checked ~ .portfolio-container .sidebar .desc-2,
+      #work3:checked ~ .portfolio-container .sidebar .desc-3,
+      #work4:checked ~ .portfolio-container .sidebar .desc-4,
+      #work5:checked ~ .portfolio-container .sidebar .desc-5,
+      #work6:checked ~ .portfolio-container .sidebar .desc-6,
+      #work7:checked ~ .portfolio-container .sidebar .desc-7,
+      #work8:checked ~ .portfolio-container .sidebar .desc-8,
+      #work9:checked ~ .portfolio-container .sidebar .desc-9,
+      #work10:checked ~ .portfolio-container .sidebar .desc-10 {
+        display: block;
+      }
+      
+      /* Markera aktiv menyknapp gul */
+      #work1:checked ~ .portfolio-container .sidebar label[for="work1"],
+      #work2:checked ~ .portfolio-container .sidebar label[for="work2"],
+      #work3:checked ~ .portfolio-container .sidebar label[for="work3"],
+      #work4:checked ~ .portfolio-container .sidebar label[for="work4"],
+      #work5:checked ~ .portfolio-container .sidebar label[for="work5"],
+      #work6:checked ~ .portfolio-container .sidebar label[for="work6"],
+      #work7:checked ~ .portfolio-container .sidebar label[for="work7"],
+      #work8:checked ~ .portfolio-container .sidebar label[for="work8"],
+      #work9:checked ~ .portfolio-container .sidebar label[for="work9"],
+      #work10:checked ~ .portfolio-container .sidebar label[for="work10"] {
+        color: #ecdd05;
+      }
+
+      /* === VERTIKALT GALLERI === */
+      .vertical-gallery {
+        display: flex;
+        flex-direction: column; /* Lägger bilderna på varandra uppifrån och ner */
+        align-items: center;    /* Centrerar bilderna */
+        gap: 60px;              /* Utrymme mellan bilderna */
+        padding: 40px;          /* Luft runt om galleriet */
+      }
+
+      /* Bildinställningar */
+      .vertical-gallery img {
+        max-width: 100%; /* Hindrar bilden från att växa utanför skärmen */
+        height: auto;    /* Behåller rätt proportioner */
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Osynliga radioknappar. OBS: Ingen har "checked" längre = vit startsida -->
+    <input type="radio" id="work1" name="portfolio">
+    <input type="radio" id="work2" name="portfolio">
+    <input type="radio" id="work3" name="portfolio">
+    <input type="radio" id="work4" name="portfolio">
+    <input type="radio" id="work5" name="portfolio">
+    <input type="radio" id="work6" name="portfolio">
+    <input type="radio" id="work7" name="portfolio">
+    <input type="radio" id="work8" name="portfolio">
+    <input type="radio" id="work9" name="portfolio">
+    <input type="radio" id="work10" name="portfolio">
+    
+    <div class="portfolio-container">
+    
+      <!-- VÄNSTER SIDA: Meny -->
+      <nav class="sidebar">
+        <h2>Edit A. Larsmark</h2>
+        <label for="work1">Work 1</label>
+        <label for="work2">Work 2</label>
+        <label for="work3">Work 3</label>
+        <label for="work4">Work 4</label>
+        <label for="work5">Work 5</label>
+        <label for="work6">Work 6</label>
+        <label for="work7">Work 7</label>
+        <label for="work8">Work 8</label>
+        <label for="work9">Work 9</label>
+        <label for="work10">Work 10</label>
+    
+        <!-- BESKRIVNINGAR (Dyker upp dynamiskt) -->
+        <div class="work-descriptions">
+          <div class="desc desc-1">
+            <p><strong>Work 1: Tryck</strong><br>Här är en beskrivning av det första projektet. Du kan skriva om processen, format och material.</p>
+          </div>
+          <div class="desc desc-2">
+            <p><strong>Work 2: Skulptur</strong><br>Detta är texten som visas när man klickar på det andra verket.</p>
+          </div>
+          <div class="desc desc-3">
+            <p>Text för work 3...</p>
+          </div>
+          <div class="desc desc-4"><p>Text för work 4...</p></div>
+          <div class="desc desc-5"><p>Text för work 5...</p></div>
+          <div class="desc desc-6"><p>Text för work 6...</p></div>
+          <div class="desc desc-7"><p>Text för work 7...</p></div>
+          <div class="desc desc-8"><p>Text för work 8...</p></div>
+          <div class="desc desc-9"><p>Text för work 9...</p></div>
+          <div class="desc desc-10"><p>Text för work 10...</p></div>
+        </div>
+
+        <div class="info">
+          <a href="mailto:edit.ahlstrom.larsmark@gmail.com">edit.ahlstrom.larsmark@gmail.com</a><br>
+          <a href="tel:+46728675729">+46728675729</a>
+          <p>Student at Beckmans College of Design</p>
+          <p>Stockholm / Sweden</p>
+        </div>
+      </nav>
+
+      <!-- HÖGER SIDA: Innehåll -->
+      <main class="content-area">
+        
+        <!-- Work 1 -->
+        <div class="work-panel panel-1">
+          <div class="vertical-gallery">
+            <img src="images/349_tryck.png" alt="Bild 1">
+            <img src="images/0888807074321_max.jpg" alt="Bild 2">
+            <img src="images/0721509806321_max.jpg" alt="Bild 3">
+          </div>
+        </div> 
+    
+        <!-- Work 2 -->
+        <div class="work-panel panel-2">
+          <div class="vertical-gallery">
+            <img src="images/349_tryck.png" alt="Bild 1">
+            <img src="images/0888807074321_max.jpg" alt="Bild 2">
+            <img src="images/0721509806321_max.jpg" alt="Bild 3">
+          </div>
+        </div>
+    
+        <!-- Work 3 -->
+        <div class="work-panel panel-3">
+          <div class="vertical-gallery">
+            <img src="images/349_tryck.png" alt="Bild 1">
+            <img src="images/0888807074321_max.jpg" alt="Bild 2">
+            <img src="images/0721509806321_max.jpg" alt="Bild 3">
+          </div>
+        </div>
+
+        <!-- Fler paneler ... Jag lämnade 4-10 likadana för att spara plats i rutan åt dig -->
+        <div class="work-panel panel-4"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+        <div class="work-panel panel-5"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+        <div class="work-panel panel-6"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+        <div class="work-panel panel-7"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+        <div class="work-panel panel-8"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+        <div class="work-panel panel-9"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+        <div class="work-panel panel-10"><div class="vertical-gallery"><img src="images/349_tryck.png" alt="Bild"></div></div>
+
+      </main>
+    </div>
+  </body>
+</html>
