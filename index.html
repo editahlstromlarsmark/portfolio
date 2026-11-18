@@ -61,7 +61,7 @@ body:not(.proj) main{min-height:0;overflow:auto}
 .r{display:flex;gap:4px;align-items:flex-start}
 .r>div{min-width:0}
 .r img{display:block;width:100%;height:auto;cursor:none}
-.r video{display:block;width:100%;height:auto;cursor:none;background:#000;object-fit:cover}
+.r video{display:block;width:100%;height:auto;cursor:none;background:transparent;object-fit:cover}
 .blk{display:flex;gap:4px;align-items:flex-start}
 .cl{display:flex;flex-direction:column;gap:4px;min-width:0}
 .gal.full{padding:0;gap:0}
@@ -76,13 +76,13 @@ body:not(.proj) main{min-height:0;overflow:auto}
 .sec.grid{display:grid;grid-template-columns:repeat(4,1fr)}
 .sec.grid img{display:block;width:100%;height:auto;cursor:none}
 .sec.grid>div{min-width:0}
-#lb{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:60px 70px}
+#lb{position:fixed;inset:0;z-index:20;background:rgba(237,235,223,.86);display:flex;align-items:center;justify-content:center;padding:60px 70px}
 #lb[hidden]{display:none}
 #lb,#lb *,.gal img,.gal video{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #lb img{-webkit-user-drag:none;pointer-events:auto}
 #lb ::selection,.gal img::selection{background:transparent}
 #lb img,#lb video{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
-#lb video{display:none;background:#000}
+#lb video{display:none;background:transparent}
 #lb.isv video{display:block}
 #lb.isv img{display:none}
 .lbn,.lbc{position:absolute;background:none;border:0;font:inherit;font-size:28px;color:inherit;cursor:var(--ch);padding:4px 10px}
@@ -185,6 +185,8 @@ function stepLB(d){lbK=(lbK+d+lbL.length)%lbL.length;showLB()}
 lb.querySelector('.lbc').addEventListener('click',function(e){e.stopPropagation();closeLB()});
 var lbCur=lb.querySelector('.lbcur'),lbClose=lb.querySelector('.lbc');
 function side(x){return x<window.innerWidth/2?-1:1}
+lb.addEventListener('wheel',function(e){e.preventDefault()},{passive:false});
+lb.addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
 lb.addEventListener('mousedown',function(e){e.preventDefault()});
 lb.addEventListener('selectstart',function(e){e.preventDefault()});
 lb.addEventListener('dragstart',function(e){e.preventDefault()});
