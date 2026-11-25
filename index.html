@@ -125,7 +125,11 @@ header{position:relative}
 header .arch{position:absolute;top:28px;right:44px;grid-column:auto;padding:0;gap:10px;align-items:flex-start;z-index:2}
 header .arch img{height:4.2vw;min-width:0;width:auto;flex:none;max-width:none;object-fit:contain;object-position:right top}
 header .arch span{line-height:inherit;padding:0 .15em}
-@media (min-width:761px){nav{display:flex;justify-content:space-between;align-items:flex-start;padding-right:32px}nav .lbl{grid-column:auto}}
+@media (min-width:761px){nav{display:flex;justify-content:space-between;align-items:flex-start}nav .lbl{grid-column:auto;position:absolute;left:44px;top:12px}
+ nav{position:sticky;padding-left:13.3vw;padding-right:13.3vw}
+ nav .work{position:relative;padding:0}
+ nav .work span{position:absolute;right:100%;top:0;margin-right:6px}
+ nav .work img{width:9.5vw;height:6.7vw;object-fit:cover;object-position:50% 50%}}
 #works br.bm{display:none}
 @media (max-width:760px){
  :root{--fs:clamp(13px,3.75vw,17px);--fh:clamp(20px,5.45vw,32px)}
@@ -139,6 +143,9 @@ header .arch span{line-height:inherit;padding:0 .15em}
  nav .work:nth-child(2n){padding-left:10.7vw}
  nav .work span{font-size:var(--fs);font-weight:800}
  nav .work img{height:17vw;width:auto;max-width:none}
+ nav{row-gap:5vw}
+ nav .lbl{margin-bottom:-3vw}
+ nav .work:nth-child(5) img{width:24vw;height:17vw;object-fit:cover;object-position:50% 55%}
  header .arch{right:5vw;gap:2vw}
  header .arch img{height:4.6vw}
 }
