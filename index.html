@@ -129,7 +129,7 @@ header .arch span{line-height:inherit;padding:0 .15em}
 #works br.bm{display:none}
 @media (max-width:760px){
  :root{--fs:clamp(13px,3.75vw,17px);--fh:clamp(20px,5.45vw,32px)}
- #works a{white-space:normal}
+ #works a{white-space:nowrap}
  #works br.bm{display:inline}
  #works br.bd{display:none}
  nav .lbl{padding-bottom:8px}
@@ -192,6 +192,22 @@ var AR={a:{0:1},2:{0: 1.3342, 1: 1.3333, 2: 1.3333, 3: 1.3333, 4: 1.3333, 5: 1.3
 /* fit: krymper galleriet så att allt ryms utan sidscroll */
 function fit(){}
 window.addEventListener('resize',fit);
+
+/* Mobil: sätt rubrikstorleken så att den bredaste raden i Selected works precis får plats (med marginal) */
+function fitH1(){
+ var r=document.documentElement;
+ if(innerWidth>760){r.style.removeProperty('--fh');return}
+ var src=document.getElementById('works');if(!src)return;
+ var c=document.createElement('h1');c.innerHTML=src.innerHTML;
+ c.style.cssText='position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;font-size:22px;max-width:none;width:auto;margin:0';
+ c.querySelectorAll('a').forEach(function(a){a.style.whiteSpace='nowrap'});c.querySelectorAll('br.bd').forEach(function(b){b.parentNode.removeChild(b)});
+ document.body.appendChild(c);
+ var W=document.documentElement.clientWidth,mg=Math.max(20,W*.055),av=W-2*mg,px=22;
+ for(var i=0;i<4;i++){c.style.fontSize=px+'px';var w=0;c.querySelectorAll('a').forEach(function(a){Array.prototype.forEach.call(a.getClientRects(),function(q){w=Math.max(w,q.width)})});if(!w)break;px=px*av/w}
+ document.body.removeChild(c);
+ r.style.setProperty('--fh',Math.max(14,Math.min(32,Math.floor(px*10)/10))+'px')
+}
+fitH1();addEventListener('resize',fitH1);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitH1);
 function fillDesc(n){var pd=document.getElementById('pdesc'),bx=pd.querySelector('.dbox'),dt=pd.querySelector('.dtext'),tg=pd.querySelector('.dtog'),ps=D[n]||[];
  dt.textContent='';bx.classList.remove('open');tg.textContent='+';tg.setAttribute('aria-expanded','false');tg.setAttribute('aria-label','Show more text');
  ps.forEach(function(t){var p=document.createElement('p');t.split('*').forEach(function(x,i){if(!x)return;if(i%2){var e=document.createElement('i');e.textContent=x;p.appendChild(e)}else p.appendChild(document.createTextNode(x))});dt.appendChild(p)});
